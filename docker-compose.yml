@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+  web:
+    image: chriha/php:7.2
+    volumes:
+      - ./src:/var/www
+      - ./temp:/temp
+    ports:
+      - "${APP_PORT}:80"
+    environment:
+      COMPOSER_HOME: "/temp/composer"
+    networks:
+      - default
+    links:
+      - db
+      - redis
+      - mailcatcher
+    env_file:
+      - ./src/.env
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASS}"
+      MYSQL_DATABASE: "${DB_NAME}"
+    volumes:
+      - ./temp/mysql:/var/lib/mysql:delegated
+    networks:
+      - default
+  node:
+    image: chriha/node:10
+    volumes:
+      - ./src:/var/www
+  redis:
+    image: redis:alpine
+    volumes:
+      - ./temp/redis:/data:cached
+    networks:
+      - default
+    command: redis-server
+  mailcatcher:
+    image: chriha/mailcatcher
+    networks:
+      - default
+    ports:
+      - "${MAILCATCHER_PORT}:1080"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "${MYADMIN_PORT}:80"
+    networks:
+      - default
+    links:
+      - db
+
+networks:
+  default:
+    driver: "bridge"
