@@ -2,7 +2,7 @@ version: '2'
 
 services:
   web:
-    image: chriha/php:7.2
+    image: chriha/php:7.4
     volumes:
       - ./src:/var/www
       - ./temp:/temp
@@ -19,7 +19,7 @@ services:
     env_file:
       - ./src/.env
   db:
-    image: mysql:5.7
+    image: mysql:5.8
     restart: always
     ports:
       - "${DB_PORT}:3306"
@@ -33,7 +33,7 @@ services:
     networks:
       - default
   node:
-    image: chriha/node:10
+    image: chriha/node:12
     volumes:
       - ./src:/var/www
   redis:
