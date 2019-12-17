@@ -2,7 +2,7 @@
 
 ## Requirements
 - [Docker](https://docs.docker.com/engine/installation/)
-- [ProjectCLI](https://github.com/chriha/project-cli) and its own requirements
+- [ProjectCLI](https://github.com/chriha/project-cli)
 
 ## Project Structure
 ```

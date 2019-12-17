@@ -19,7 +19,7 @@ services:
     env_file:
       - ./src/.env
   db:
-    image: mysql:5.8
+    image: mysql:8
     restart: always
     ports:
       - "${DB_PORT}:3306"
