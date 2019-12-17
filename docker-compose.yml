@@ -37,14 +37,14 @@ services:
     volumes:
       - ./src:/var/www
   redis:
-    image: redis:alpine
+    image: redis:5.0
     volumes:
       - ./temp/redis:/data:cached
     networks:
       - default
     command: redis-server
   mailcatcher:
-    image: chriha/mailcatcher
+    image: chriha/mailcatcher:0.7
     networks:
       - default
     ports:
